@@ -4,14 +4,14 @@ import { AppointmentForm } from "@/components/forms/AppointmentForm";
 import { getPatient } from "@/lib/actions/patient.actions";
 
 declare type SearchParamProps = {
-  params: Record<string, string>;  // ✅ Ensures params is a normal object
-  searchParams?: Record<string, string | string[] | undefined>; // ✅ Optional
+  params: { userId: string };  // ✅ Define params explicitly as an object
+  searchParams?: { [key: string]: string | string[] | undefined }; // Optional
 };
 
 const Appointment = async ({ params }: SearchParamProps) => {
-  const userId = params.userId;  // ✅ Extract userId safely
+  const { userId } = params;  // ✅ Extract userId correctly
 
-  const patient = await getPatient(userId);
+  const patient = await getPatient(userId);  // ✅ Fetch patient data
 
   return (
     <div className="flex h-screen max-h-screen">
