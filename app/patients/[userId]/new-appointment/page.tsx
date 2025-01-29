@@ -3,15 +3,8 @@ import Image from "next/image";
 import { AppointmentForm } from "@/components/forms/AppointmentForm";
 import { getPatient } from "@/lib/actions/patient.actions";
 
-declare type SearchParamProps = {
-  params: { userId: string };  // ✅ Define params explicitly as an object
-  searchParams?: { [key: string]: string | string[] | undefined }; // Optional
-};
-
-const Appointment = async ({ params }: SearchParamProps) => {
-  const { userId } = params;  // ✅ Extract userId correctly
-
-  const patient = await getPatient(userId);  // ✅ Fetch patient data
+const Appointment = async ({ params: { userId } }: SearchParamProps) => {
+  const patient = await getPatient(userId);
 
   return (
     <div className="flex h-screen max-h-screen">
