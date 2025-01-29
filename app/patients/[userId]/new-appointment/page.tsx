@@ -4,12 +4,13 @@ import { AppointmentForm } from "@/components/forms/AppointmentForm";
 import { getPatient } from "@/lib/actions/patient.actions";
 
 declare type SearchParamProps = {
-  params: { userId: string };  // ✅ Define params as an object with userId
-  searchParams?: { [key: string]: string | string[] | undefined }; // Optional if not used
+  params: Record<string, string>;  // ✅ Ensures params is a normal object
+  searchParams?: Record<string, string | string[] | undefined>; // ✅ Optional
 };
 
 const Appointment = async ({ params }: SearchParamProps) => {
-  const { userId } = params;  // ✅ Correctly extract userId
+  const userId = params.userId;  // ✅ Extract userId safely
+
   const patient = await getPatient(userId);
 
   return (
@@ -23,11 +24,13 @@ const Appointment = async ({ params }: SearchParamProps) => {
             alt="logo"
             className="mb-12 h-10 w-fit"
           />
+
           <AppointmentForm
             patientId={patient?.$id}
             userId={userId}
             type="create"
           />
+
           <p className="copyright mt-10 py-12">© 2024 CarePluse</p>
         </div>
       </section>
